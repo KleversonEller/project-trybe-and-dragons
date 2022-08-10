@@ -1,4 +1,4 @@
-import Fighter from './Fighter';
+import Fighter, { SimpleFighter } from './Fighter';
 import Race, { Elf } from './Races';
 import Archetype, { Mage } from './Archetypes';
 import Energy from './Energy';
@@ -46,7 +46,7 @@ export default class Character implements Fighter {
     return this.lifePoints;
   }
 
-  attack(value: Fighter) {
+  attack(value: Fighter | SimpleFighter) {
     value.receiveDamage(this.strength);
   }
 
@@ -62,7 +62,7 @@ export default class Character implements Fighter {
     this._lifePoints = this._maxLifePoints;
   }
 
-  special() {
+  special(value: Fighter | SimpleFighter) {
     if (this.energy.amount === 10 && this._dexterity >= 50) {
       this._strength *= 2;
       this._maxLifePoints /= 2;
@@ -76,5 +76,6 @@ export default class Character implements Fighter {
     Amount = ${this._energy.amount}
     Dexterity = ${this._dexterity}`);
     }
+    value.receiveDamage(this.strength);
   }
 }
